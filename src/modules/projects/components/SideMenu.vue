@@ -1,18 +1,20 @@
 <template>
   <aside class="bg-base-200 w-72 min-h-screen">
-    <h2 class="text-lg font-bold mx-4">Proyectos</h2>
+    <RouterLink :to="{ name: 'home' }">
+      <h2 class="text-lg font-bold mx-4">Proyectos</h2>
+    </RouterLink>
     <p v-if="projectStore.isEmpty" class="text-sm text-gray-500 mx-4">No hay proyectos</p>
     <!-- menu -->
     <ul v-else class="menu">
       <li v-for="(project) in projectStore.projectList" :key="project.id">
 
-        <template v-if="project.task.length > 0">
+        <template v-if="project.tasks.length > 0">
           <details open>
             <summary>
               <RouterLink :to="{ name: 'project', params: { id: project.id } }">{{ project.name }}</RouterLink>
             </summary>
             <ul>
-              <li v-for="(task) in project.task" :key="task.id">
+              <li v-for="(task) in project.tasks" :key="task.id">
                 <RouterLink :to="{ name: 'project', params: { id: project.id } }">{{ task.name }}</RouterLink>
               </li>
             </ul>

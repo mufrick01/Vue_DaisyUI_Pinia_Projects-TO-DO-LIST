@@ -12,12 +12,17 @@
       </thead>
       <tbody>
         <!-- row 1 -->
-        <tr v-for="(project, index) in projectStore.projectList" :key="project.id" class="hover">
+        <tr v-for="(project, index) in projectStore.projectsListWithCompletion" :key="project.id" class="hover">
           <th>{{ index + 1 }}</th>
-          <td>{{ project.name }}</td>
-          <td>{{ project.task.length }}</td>
-          <td>
-            <progress class="progress progress-primary w-full" value="10" max="100"></progress>
+          <RouterLink :to="{ name: 'project', params: { id: project.id } }">
+            <td>
+              {{ project.name }}
+            </td>
+          </RouterLink>
+          <td>{{ project.taskCount }}</td>
+          <td class="">
+            {{ project.completion }}
+            <progress class="progress progress-primary" :value="project.completion" max="100"></progress>
           </td>
         </tr>
       </tbody>
