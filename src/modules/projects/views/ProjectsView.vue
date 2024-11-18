@@ -12,18 +12,20 @@
       </thead>
       <tbody>
         <!-- row 1 -->
-        <tr class="hover">
-          <th>1</th>
-          <td>Cy Ganderton</td>
-          <td>Quality Control Specialist</td>
-          <td>Blue</td>
+        <tr v-for="(project, index) in projectStore.projectList" :key="project.id" class="hover">
+          <th>{{ index + 1 }}</th>
+          <td>{{ project.name }}</td>
+          <td>{{ project.task.length }}</td>
+          <td>
+            <progress class="progress progress-primary w-full" value="10" max="100"></progress>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
   <!-- InputModal -->
-  <InputModal :open="modalOpen" @close="modalOpen = false" @value="onNewValue" placeholder="Ingrese nombre del proyecto"
-    title="Nuevo Proyecto" />
+  <InputModal :open="modalOpen" @close="modalOpen = false" @value="projectStore.addProject"
+    placeholder="Ingrese nombre del proyecto" title="Nuevo Proyecto" />
 
   <!-- CustomModal -->
 
@@ -47,7 +49,7 @@
   </CustomModal>
 
   <!-- FabButton -->
-  <FabButton @click="modalOpen = customModalOpen">
+  <FabButton @click="modalOpen = true">
     <AddCircleIcon />
   </FabButton>
 
@@ -64,11 +66,15 @@ import InputModal from '@/modules/common/components/InputModal.vue';
 import AddCircleIcon from '@/modules/common/icons/AddCircleIcon.vue';
 import AddSquareIcon from '@/modules/common/icons/AddSquareIcon.vue';
 import { ref } from 'vue';
+import { useProjectsStore } from '../store/projects.store';
 
 const modalOpen = ref(false);
 const customModalOpen = ref(false);
 
 const customInputValue = ref('');
+
+const projectStore = useProjectsStore();
+
 
 const onSubmit = () => {
   if (!customInputValue.value.trim()) {
@@ -78,7 +84,4 @@ const onSubmit = () => {
   customInputValue.value = '';
 }
 
-const onNewValue = (projectName: string) => {
-  console.log(projectName)
-}
 </script>
